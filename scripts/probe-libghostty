@@ -1,0 +1,19 @@
+#!/bin/bash
+set -euo pipefail
+cd "$(dirname "$0")/.."
+version=1.0.0
+cache="$PWD/.build/libghostty-vt-$version"
+mkdir -p "$cache"
+tmp=$(mktemp -d "$cache/download.XXXXXX")
+trap 'rm -rf "$tmp"' EXIT
+
+if [[ ! -d "$cache/ghostty-vt.xcframework" ]]; then
+    curl -fLsS --max-time 60 "https://release.files.ghostty.org/libghostty-vt/$version/ghostty-vt-$version.xcframework.zip" -o "$tmp/vt.zip"
+    (cd "$tmp"; printf '%s\n' '2c32b7409b2b6c2ef6cfd606526de357762ad458bdc27134ad074e86506a8bc2  vt.zip' | shasum -a 256 -c; unzip -q vt.zip)
+    mv "$tmp/ghostty-vt.xcframework" "$cache/"
+fi
+
+slice="$cache/ghostty-vt.xcframework/macos-arm64_x86_64"
+xcrun clang -O2 -Wall -Wextra -Werror -I "$slice/Headers" tests/senterm-tests/libghostty-pty-probe.c "$slice/libghostty-vt.a" -lc++ -o "$tmp/probe"
+"$tmp/probe" "$(command -v python3)" "$PWD/scripts/benchmark-output.py" "$tmp/result.json" "$@"
+python3 -m json.tool "$tmp/result.json"
