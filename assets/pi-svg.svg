@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400" width="400" height="400">
+  <!-- Top-Right Bracket -->
+  <path d="M0 0 H300 V200 H200 V100 H0 Z" fill="#FFFFFF" />
+
+  <!-- Left Stem & Arm -->
+  <path d="M0 100 H100 V200 H200 V300 H100 V400 H0 Z" fill="#FFFFFF" />
+
+  <!-- Bottom-Right Pillar -->
+  <rect x="300" y="200" width="100" height="200" fill="#FFFFFF" />
+</svg>

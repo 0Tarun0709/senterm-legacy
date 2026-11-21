@@ -1,0 +1,24 @@
+#!/bin/bash
+set -euo pipefail
+cd "$(dirname "$0")/.."
+cli="$HOME/.local/bin/senterm"
+skill="${PI_CODING_AGENT_DIR:-$HOME/.pi/agent}/skills/senterm-review"
+source_skill="$PWD/skills/senterm-review"
+
+link() {
+    if [[ -L "$2" && "$(readlink "$2")" == "$1" ]]; then return; fi
+    ln -s -h "$1" "$2"
+}
+
+for target in "$cli" "$skill"; do
+    if [[ -d "$target" && ! -L "$target" ]]; then
+        printf 'refusing to replace existing directory: %s\n' "$target" >&2
+        exit 1
+    fi
+done
+swift build -c release
+binary="$(swift build -c release --show-bin-path)/SenTerm"
+mkdir -p "$(dirname "$cli")" "$(dirname "$skill")"
+link "$binary" "$cli"
+link "$source_skill" "$skill"
+printf 'installed %s and %s\n' "$cli" "$skill"

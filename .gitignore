@@ -1,0 +1,13 @@
+.build/
+.swiftpm/
+__pycache__/
+.DS_Store
+
+# local research and agent setup
+/Rex.dmg
+/rex-evidence.json
+/REX-RESEARCH.md
+/rex-docs-notes.md
+/.agents/
+/.pi/
+/skills-lock.json

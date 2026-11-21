@@ -1,0 +1,24 @@
+#!/bin/bash
+set -euo pipefail
+cd "$(dirname "$0")/.."
+swift build -c release
+app="$PWD/.build/SenTerm.app"
+mkdir -p "$app/Contents/MacOS" "$app/Contents/Resources/assets"
+cp assets/* "$app/Contents/Resources/assets/"
+mkdir -p "$app/Contents/Resources/zsh"
+cp scripts/shell-integration.zsh scripts/zsh/.zshenv "$app/Contents/Resources/zsh/"
+swift scripts/icon.swift "$PWD/.build/senterm.iconset"
+iconutil -c icns "$PWD/.build/senterm.iconset" -o "$app/Contents/Resources/senterm.icns"
+bin="$(swift build -c release --show-bin-path)"
+cp "$bin/SenTerm" "$app/Contents/MacOS/SenTerm"
+# swiftpm's shader is read-only; replace the old copy on rebuild.
+cp -f "$bin/SwiftTerm_SwiftTerm.bundle/Shaders.metal" "$app/Contents/Resources/"
+/usr/libexec/PlistBuddy -c 'Clear dict' "$app/Contents/Info.plist" 2>/dev/null || true
+/usr/libexec/PlistBuddy -c 'Add :CFBundleIdentifier string local.senterm.app' "$app/Contents/Info.plist"
+/usr/libexec/PlistBuddy -c 'Add :CFBundleExecutable string SenTerm' "$app/Contents/Info.plist"
+/usr/libexec/PlistBuddy -c 'Add :CFBundleName string senterm' "$app/Contents/Info.plist"
+/usr/libexec/PlistBuddy -c 'Add :CFBundleIconFile string senterm' "$app/Contents/Info.plist"
+/usr/libexec/PlistBuddy -c 'Add :CFBundleShortVersionString string 0.1.0' "$app/Contents/Info.plist"
+/usr/libexec/PlistBuddy -c 'Add :LSMinimumSystemVersion string 13.0' "$app/Contents/Info.plist"
+/usr/libexec/PlistBuddy -c 'Add :CFBundlePackageType string APPL' "$app/Contents/Info.plist"
+open "$app"
