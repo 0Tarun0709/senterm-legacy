@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#09121d" />
+    <meta name="description" content="A project-first macOS terminal built on Ghostty, with a folder sidebar and a side-by-side Git diff viewer." />
+    <link rel="icon" href="icon.png" type="image/png" />
+    <link rel="stylesheet" href="style.css" />
+    <title>senterm — a terminal for your projects</title>
+  </head>
+  <body>
+    <header class="wrap top">
+      <a class="brand" href="./"><img src="icon.png" width="44" height="44" alt="" />senterm</a>
+      <nav aria-label="main">
+        <a href="#workspace">workspace</a>
+        <a href="#review">git review</a>
+        <a href="https://github.com/0Tarun0709/senterm">github</a>
+      </nav>
+    </header>
+
+    <main class="wrap">
+      <section class="hero" id="workspace" aria-labelledby="hero-heading">
+        <div class="hero-copy">
+          <h1 id="hero-heading">your projects.<br />one terminal.</h1>
+          <p>keep shells, dev servers, and coding agents in the same mac window. group tabs by folder and split a tab when you need two things in view.</p>
+          <div class="actions">
+            <a class="button" href="#preview">try the preview</a>
+            <a href="#review">see git review <span aria-hidden="true">↓</span></a>
+          </div>
+          <p class="platform">native macos app · built on ghostty</p>
+        </div>
+        <figure class="hero-shot">
+          <a class="screenshot" href="shots/workspace.webp">
+            <img src="shots/workspace.webp" width="1602" height="1266" fetchpriority="high" alt="senterm in the abyssal trench theme, with the terminal sidebar open beside a shell." />
+          </a>
+          <figcaption>the senterm workspace in abyssal trench</figcaption>
+        </figure>
+      </section>
+
+      <section class="review" id="review" aria-labelledby="review-heading">
+        <div class="section-intro">
+          <h2 id="review-heading">read what changed,<br />side by side.</h2>
+          <p>open <strong>file → git changes…</strong> from a terminal in your repo. switch between staged and unstaged changes, see the line totals, and read syntax-highlighted diffs without leaving senterm.</p>
+        </div>
+        <figure>
+          <a class="screenshot" href="shots/git-changes.webp">
+            <img src="shots/git-changes.webp" width="1920" height="1185" loading="lazy" decoding="async" alt="the git changes viewer with a file list on the left and a python edit shown as old and new code side by side." />
+          </a>
+          <figcaption>git changes in a demo repository · click to see the full screenshot</figcaption>
+        </figure>
+      </section>
+
+      <section class="preview" id="preview" aria-labelledby="preview-heading">
+        <div>
+          <h2 id="preview-heading">try senterm</h2>
+          <p>preview builds are available as a universal macos disk image for apple silicon and intel. sign in to github, open a successful build, and download the <code>senterm-macos-universal</code> artifact.</p>
+          <p class="fine">the preview is not notarized by apple. macos may warn on first launch.</p>
+        </div>
+        <a class="button" href="https://github.com/0Tarun0709/senterm/actions/workflows/senterm-dmg.yml?query=branch%3Amain+is%3Asuccess">find a preview build</a>
+      </section>
+    </main>
+
+    <footer class="wrap foot">
+      <span>senterm</span>
+      <a href="https://github.com/ghostty-org/ghostty">based on ghostty</a>
+    </footer>
+  </body>
+</html>
